@@ -65,6 +65,8 @@ RUN wget -q https://huggingface.co/Kijai/vitpose_comfy/resolve/main/onnx/vitpose
 COPY . .
 RUN mkdir -p /ComfyUI/user/default/ComfyUI-Manager
 COPY config.ini /ComfyUI/user/default/ComfyUI-Manager/config.ini
-RUN chmod +x /entrypoint.sh
+
+# Fix Windows line endings (CRLF -> LF) for shell scripts
+RUN sed -i 's/\r$//' /entrypoint.sh && chmod +x /entrypoint.sh
 
 CMD ["/entrypoint.sh"]
